@@ -12,11 +12,11 @@ class WebUser extends CWebUser {
     // при необходимости можно передавать нужное значение при регистрации или входе в систему через POST параметр
     private $_returnUrl;
 
-	/**
-	 * Инициализация компонента.
-	 * Session стартуются, только если ранее они уже были установлены.
-	 */
-	public function init() {
+    /**
+     * Инициализация компонента.
+     * Session стартуются, только если ранее они уже были установлены.
+     */
+    public function init() {
         // Пропускаем инициализацию у родительского класа и делаем иницализацию у прородительского класса
         $parent = get_parent_class(get_parent_class(__CLASS__));
         $parent::init();
@@ -27,15 +27,15 @@ class WebUser extends CWebUser {
         }
 
         if($this->getIsGuest() && $this->allowAutoLogin) {
-			$this->restoreFromCookie();
+            $this->restoreFromCookie();
         } else if($this->autoRenewCookie && $this->allowAutoLogin) {
-			$this->renewCookie();
+            $this->renewCookie();
         }
-		if($session->getIsStarted() && $this->autoUpdateFlash) {
-			$this->updateFlash();
+        if($session->getIsStarted() && $this->autoUpdateFlash) {
+            $this->updateFlash();
         }
 
-		$this->updateAuthStatus();
+        $this->updateAuthStatus();
     }
 
     public function getIsGuest() {
@@ -45,27 +45,27 @@ class WebUser extends CWebUser {
     }
 
     public function getState($key,$defaultValue=null) {
-		return Yii::app()->getSession()->getIsStarted()
+        return Yii::app()->getSession()->getIsStarted()
                 ? parent::getState($key,$defaultValue)
                 : $defaultValue;
-	}
+    }
 
     public function setState($key,$value,$defaultValue=null) {
-		Yii::app()->getSession()->open();
-		return parent::setState($key,$value,$defaultValue);
-	}
+        Yii::app()->getSession()->open();
+        return parent::setState($key,$value,$defaultValue);
+    }
 
     public function hasState($key) {
-		return Yii::app()->getSession()->getIsStarted()
+        return Yii::app()->getSession()->getIsStarted()
                 ? parent::hasState($key)
                 : false;
-	}
+    }
 
     public function clearStates() {
         return Yii::app()->getSession()->getIsStarted()
                 ? parent::clearStates()
                 : null;
-	}
+    }
 
     public function getFlashes($delete=true) {
         return Yii::app()->getSession()->getIsStarted()
@@ -101,8 +101,8 @@ class WebUser extends CWebUser {
         $this->_returnUrl = $value;
         // Если нужно хранить returnUrl в Session, тогда нужно удалить из конфигурации (main.php) значение по умолчанию, иначе оно присваевается при каждой инициализации объекта класса CWebUser
         //Yii::app()->getSession()->open();
-		//return parent::setReturnUrl($value);
-	}
+        //return parent::setReturnUrl($value);
+    }
 
     public function beforeLogin($id, $states, $fromCookie) {
         // Открываем Session, если пользователь успешно прошёл аутентификацию

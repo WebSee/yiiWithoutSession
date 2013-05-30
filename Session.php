@@ -43,9 +43,9 @@ class Session extends CDbHttpSession {
      * Дополнительно к родительскому методу destroy() добавляем удаление идентификатора Session из Cookie
      */
     public function destroy() {
-		parent::destroy();
+        parent::destroy();
 
         $cookieParams = $this->getCookieParams();
         setcookie($this->getSessionName(), '', 0, $cookieParams['path'], $cookieParams['domain']);
-	}
+    }
 }
