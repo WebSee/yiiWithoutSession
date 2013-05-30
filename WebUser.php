@@ -29,11 +29,6 @@ class WebUser extends CWebUser {
         if($this->getIsGuest() && $this->allowAutoLogin) {
 			$this->restoreFromCookie();
         } else if($this->autoRenewCookie && $this->allowAutoLogin) {
-            $cookie=Yii::app()->getRequest()->getCookies()->itemAt($this->getStateKeyPrefix());
-            var_dump($cookie->domain);
-    		$data=Yii::app()->getSecurityManager()->validateData($cookie->value);
-			$data=@unserialize($data);
-            var_dump($data);
 			$this->renewCookie();
         }
 		if($session->getIsStarted() && $this->autoUpdateFlash) {
