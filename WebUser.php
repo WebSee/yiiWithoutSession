@@ -105,8 +105,8 @@ class WebUser extends CWebUser {
     }
 
     public function beforeLogin($id, $states, $fromCookie) {
-        // Открываем Session, если пользователь успешно прошёл аутентификацию
-        // (Функция beforeLogin вызывается после успешной аутентификации)
+        // Открываем Session, если пользователь успешно прошёл идентификацию
+        // (Функция beforeLogin вызывается после успешной идентификации)
         Yii::app()->getSession()->open();
         return parent::beforeLogin($id, $states, $fromCookie);
     }
