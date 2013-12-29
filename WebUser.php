@@ -7,10 +7,13 @@
  */
 
 class WebUser extends CWebUser {
-
-    // Вместо хранения returnUrl в Session, будем хранить её в объекте Yii::app()->user
-    // при необходимости можно передавать нужное значение при регистрации или входе в систему через POST параметр
-    private $_returnUrl;
+    /**
+     * @var string is used instead of returnUrl
+     * В конфигурации (main.php) для значение по умолчанию вместо returnUrl,
+     * следует использовать параметр defaultReturnUrl, 
+     * иначе при каждой инициализации объекта класса CWebUser стартует сессия.
+     */
+    public $defaultReturnUrl;
 
     /**
      * Инициализация компонента.
@@ -91,17 +94,17 @@ class WebUser extends CWebUser {
     }
 
     public function getReturnUrl($defaultUrl=null) {
-        return $this->_returnUrl ? $this->_returnUrl : $defaultUrl;
-        //return Yii::app()->getSession()->getIsStarted()
-        //        ? parent::getReturnUrl($defaultUrl)
-        //        : $defaultUrl;
+        return Yii::app()->getSession()->getIsStarted()
+                ? parent::getReturnUrl($this->defaultReturnUrl ?: $defaultUrl)
+                : $this->defaultReturnUrl ?: $defaultUrl;
     }
 
     public function setReturnUrl($value) {
-        $this->_returnUrl = $value;
-        // Если нужно хранить returnUrl в Session, тогда нужно удалить из конфигурации (main.php) значение по умолчанию, иначе оно присваевается при каждой инициализации объекта класса CWebUser
-        //Yii::app()->getSession()->open();
-        //return parent::setReturnUrl($value);
+        // В конфигурации (main.php) для значение по умолчанию вместо returnUrl,
+        // следует использовать параметр defaultReturnUrl, 
+        // иначе при каждой инициализации объекта класса CWebUser стартует сессия.
+        Yii::app()->getSession()->open();
+        return parent::setReturnUrl($value);
     }
 
     public function beforeLogin($id, $states, $fromCookie) {
