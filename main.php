@@ -12,6 +12,9 @@ return array(
     'components'=>array(
         'user'=>array(
             'class' => 'WebUser',
+            'loginUrl' => array('user/login'),
+            //defaultReturnUrl is used instead of returnUrl
+            'defaultReturnUrl' => array('user'),
             // enable cookie-based authentication
             'allowAutoLogin'=>true,
             'autoRenewCookie'=>true,
